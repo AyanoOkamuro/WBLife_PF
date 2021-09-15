@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 2021_09_14_050439) do
     t.string "nickname", null: false
     t.integer "gender", default: 0, null: false
     t.integer "age", default: 0, null: false
-    t.string "profile_image_id", null: false
+    t.string "profile_image_id", default: "", null: false
     t.boolean "is_deleted", default: false, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
