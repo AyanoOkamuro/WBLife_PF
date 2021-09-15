@@ -32,6 +32,20 @@
     </div>
     <div class="col-md-8 offset-md-1 mt-5">
       <h2><%= @user.nickname %>の投稿</h2>
+      <div class="row">
+        <% @posts.each do |post| %>
+          <div class="col-3">
+            <%= link_to post_path(post.id) do %>
+              <%= attachment_image_tag post, :image, format: "jpeg", fallback: "no_image.jpg", size: "200x150" %>
+            <% end %>
+            <p class="my-2"><%= link_to post.body, post_path(post.id),class:"text-dark" %></p>
+            <p class="text-dark mb-5"><%= @user.nickname %></p>
+          </div>
+        <% end %>
+      </div>
+      <div class="row justify-content-center">
+        <%= paginate @posts %>
+      </div>
     </div>
   </div>
 </div>
