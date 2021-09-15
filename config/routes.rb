@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       patch "users/withdraw" => "users#withdraw"
     end
     resources :posts
+    resources :question
   end
 
 
