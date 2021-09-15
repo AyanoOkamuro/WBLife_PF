@@ -38,8 +38,6 @@
             <%= link_to post_path(post.id) do %>
               <%= attachment_image_tag post, :image, format: "jpeg", fallback: "no_image.jpg", size: "200x150" %>
             <% end %>
-            <p class="my-2"><%= link_to post.body, post_path(post.id),class:"text-dark" %></p>
-            <p class="text-dark mb-5"><%= @user.nickname %></p>
           </div>
         <% end %>
       </div>
