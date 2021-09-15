@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-3 mt-5">
+      <%= attachment_image_tag @user, :profile_image, :fill,100, 100, format: "jpeg", fallback: "no_image.jpg" %>
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>ニックネーム</th>
+            <th><%= @user.nickname %></th>
+          </tr>
+          <tr>
+            <th>いいね</th>
+            <th></th>
+          </tr>
+          <tr>
+            <th>フォロー</th>
+            <th></th>
+          </tr><tr>
+            <th>フォロワー</th>
+            <th></th>
+          </tr>
+        </tbody>
+      </table>
+      <div class="row">
+        <div class="col-6">
+          <%= link_to "編集", edit_user_path(@user.id) %>
+        </div>
+        <div class="col-6">
+          <%= link_to "退会", user_users_unsubscribe_path(@user.id) %>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8 offset-md-1 mt-5">
+      <h2><%= @user.nickname %>の投稿</h2>
+    </div>
+  </div>
+</div>
