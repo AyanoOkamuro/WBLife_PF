@@ -1,2 +1,34 @@
-<h1>Users::Questions#index</h1>
-<p>Find me in app/views/users/questions/index.html.erb</p>
+<div class="container mt-5">
+  <div class="row">
+    <h2 class="mb-3">質問一覧</h2>
+  </div>
+  <div class="row">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>質問タイトル</th>
+          <th>質問内容</th>
+          <th colspan="3"></th>
+        </tr>
+      </thead>
+      <% @questions.each do |question| %>
+        <tbody>
+          <tr>
+            <td>
+              <%= question.title %>
+            </td>
+            <td>
+              <%= question.body %>
+            </td>
+            <td>
+              <%= link_to "質問を見る", question_path(question.id) %>
+            </td>
+          </tr>
+        </tbody>
+      <% end %>
+    </table>
+  </div>
+</div>
+<div class="row justify-content-center">
+  <%= paginate @questions %>
+</div>
