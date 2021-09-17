@@ -1,2 +1,19 @@
-<h1>Users::Questions#show</h1>
-<p>Find me in app/views/users/questions/show.html.erb</p>
+<div class="container mt-5 pt-2">
+  <div class="row mb-5">
+    <h4 class="font-weight-bold"><%= @question.title %></h4>
+  </div>
+  <div class="row mb-5">
+    <h6><%= @question.body %></h6>
+  </div>
+  <div class="row mb-5">
+    <%= attachment_image_tag @question, :image, format: "jpeg", size: "400x300" %>
+  </div>
+  <div class="row mt-5">
+    <div class="col">
+      <%= link_to "編集する", edit_question_path(@question), class: "btn btn-outline-dark" %>
+    </div>
+    <div class="col">
+      <%= link_to "削除する", question_path, class: "btn btn-outline-dark", method: :delete, data: {confirm: "この質問を消しますか？"} %>
+    </div>
+  </div>
+</div>
