@@ -14,13 +14,16 @@
           </tr>
           <tr>
             <th>フォロー</th>
-            <th></th>
+            <th><%= link_to @user.followings.count, user_followings_path(@user.id) %></th>
           </tr><tr>
             <th>フォロワー</th>
-            <th></th>
+            <th><%= link_to @user.followers.count, user_followers_path(@user.id) %></th>
           </tr>
         </tbody>
       </table>
+      <div class="row">
+        <%= render "users/relationships/info", user: @user %>
+      </div>
       <div class="row">
         <div class="col-6">
           <%= link_to "編集", edit_user_path(@user.id) %>
