@@ -19,7 +19,7 @@ class Users::QuestionsController < ApplicationController
   def show
     @question = Question.find(params[:id])
     @user = @question.user
-    # @book_comment = BookComment.new
+    @answer = Answer.new
   end
 
   def index
