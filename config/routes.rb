@@ -6,15 +6,6 @@ Rails.application.routes.draw do
     sessions: "users/sessions"
   }
 
-  # devise_scope :users do
-  #   get "users/sign_up", :to => "users/registrations#new"
-  #   post "users", :to => "users/registrations#create"
-  #   get "users/sign_in", :to => "users/sessions#new"
-  #   post "users/sign_in", :to => "users/sessions#create"
-  #   delete "users/sign_out", :to => "users/sessions#destroy"
-  # end
-
-
   scope module: :users do
     root to: "homes#top"
     get "about" => "homes#about"
@@ -27,9 +18,9 @@ Rails.application.routes.draw do
     end
     resources :posts do
       resource :likes, only: [:create, :destroy]
+      resources :comments, only: [:create, :destroy]
     end
     resources :questions
   end
-
 
 end
