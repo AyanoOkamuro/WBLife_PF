@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  # devise_for :users
+
   devise_for :users,controllers:{
     registrations: "users/registrations",
     passwords: "users/passwords",
@@ -20,7 +20,10 @@ Rails.application.routes.draw do
       resource :likes, only: [:create, :destroy]
       resources :comments, only: [:create, :destroy]
     end
-    resources :questions
+    resources :questions do
+      resources :answers, only: [:create, :edit, :update, :destroy]
+    end
+
   end
 
 end

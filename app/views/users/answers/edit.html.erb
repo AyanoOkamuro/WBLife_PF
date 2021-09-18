@@ -1,0 +1,16 @@
+<div class="container">
+  <h2>回答編集</h2>
+  <%= form_with model:[@question, @answer], local: true do |f| %>
+    <div class="form-group">
+      <label>回答内容</label>
+      <%= f.text_area :body, class: 'form-control' %>
+    </div>
+    <div class="row mb-3">
+      <div class="col-3"><%= f.label :投稿画像 %></div>
+      <div class="col-4 mr-auto"><%= f.attachment_field :image %></div>
+    </div>
+    <div class="text-center">
+      <%= f.submit "編集内容を投稿する", class: "btn btn-primary" %>
+    </div>
+  <% end %>
+</div>
