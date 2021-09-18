@@ -18,7 +18,7 @@ class Users::PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @user = @post.user
-    # @book_comment = BookComment.new
+    @comment = Comment.new
   end
 
   def index

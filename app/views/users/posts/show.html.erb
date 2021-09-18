@@ -8,29 +8,53 @@
         <h2 class="font-weight-bold"><%= @post.body %></h2>
       </div>
       <% if @post.liked_by?(current_user) %>
-        <td>
-          <%= link_to post_likes_path(@post), method: :delete do %>
-            <i class="fa fa-heart fa-xs" aria-hidden="true"  style="color: red;">
-              <%= @post.likes.count %>
-            </i>
-          <% end %>
-        </td>
+        <%= link_to post_likes_path(@post), method: :delete do %>
+          <i class="fa fa-heart fa-xs" aria-hidden="true"  style="color: red;">
+            <%= @post.likes.count %>
+          </i>
+        <% end %>
       <% else %>
-        <td>
-          <%= link_to post_likes_path(@post), method: :post do %>
-            <i class="fa fa-heart fa-xs" aria-hidden="true">
-              <%= @post.likes.count %>
-            </i>
-          <% end %>
-        </td>
+        <%= link_to post_likes_path(@post), method: :post do %>
+          <i class="fa fa-heart fa-xs" aria-hidden="true">
+            <%= @post.likes.count %>
+          </i>
+        <% end %>
       <% end %>
       <div class="row mt-5">
-        <div class="col-6">
-          <%= link_to "編集する", edit_post_path(@post), class: "btn btn-outline-dark" %>
-        </div>
-        <div class="col-6">
-          <%= link_to "削除する", post_path, class: "btn btn-outline-dark", method: :delete, data: {confirm: "この投稿を消しますか？"} %>
-        </div>
+        <% if @user.id == current_user.id %>
+          <div class="col-6">
+            <%= link_to "編集する", edit_post_path(@post), class: "btn btn-outline-dark" %>
+          </div>
+          <div class="col-6">
+            <%= link_to "削除する", post_path, class: "btn btn-outline-dark", method: :delete, data: {confirm: "この投稿を消しますか？"} %>
+          </div>
+        <% end %>
+      </div>
+      <div class="row">
+        <table>
+          <% @post.comments.each do |comment| %>
+            <tbody>
+              <tr>
+                <td>
+                  <%= link_to attachment_image_tag(comment.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"40x40"), user_path(comment.user_id) %><br>
+                  <%= link_to comment.user.nickname, user_path(comment.user_id) %>
+                </td>
+                <td style="padding: 10px;">
+                  <%= comment.comment %>
+                </td>
+                <% if comment.user == current_user %>
+                  <td>
+                    <%= link_to "削除", post_comment_path(comment.post, comment), class: "btn btn-sm btn-danger", method: :delete %>
+                  </td>
+                <% end %>
+              </tr>
+            </tbody>
+          <% end %>
+        </table>
+        <%= form_with(model:[@post, @comment], local: true) do |f| %>
+          <%= f.text_area :comment, size: "90x5" %>
+          <%= f.submit "送信" %>
+        <% end %>
       </div>
     </div>
   </div>
