@@ -21,7 +21,9 @@ Rails.application.routes.draw do
       resources :comments, only: [:create, :destroy]
     end
     resources :questions do
-      resources :answers, only: [:create, :edit, :update, :destroy]
+      resources :answers, only: [:create, :edit, :update, :destroy] do
+        resource :nices, only: [:create, :destroy]
+      end
     end
 
   end
