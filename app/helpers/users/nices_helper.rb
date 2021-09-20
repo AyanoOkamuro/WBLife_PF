@@ -1,0 +1,2 @@
+module Users::NicesHelper
+end
