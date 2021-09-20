@@ -26,6 +26,10 @@ Rails.application.routes.draw do
       end
     end
 
+    get   'inquiries'         => 'inquiries#index'     # 入力画面
+    post  'inquiries/confirm' => 'inquiries#confirm'   # 確認画面
+    post  'inquiries/thanks'  => 'inquiries#thanks'    # 送信完了画面
+
   end
 
 end
