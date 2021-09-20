@@ -85,5 +85,17 @@
       </nav>
     </header>
     <%= yield %>
+    <footer>
+      <div class='container mt-5'>
+        <div class='row'>
+          <div class='mx-auto'>
+            <% if user_signed_in? %>
+              <p><%= link_to ' お問合せ',inquiries_path,class: 'nav-link text-dark' %></p>
+            <% else %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
