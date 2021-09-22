@@ -1,5 +1,21 @@
 Rails.application.routes.draw do
 
+  namespace :admins do
+    get 'questions/index'
+    get 'questions/show'
+  end
+  namespace :admins do
+    get 'posts/index'
+    get 'posts/show'
+  end
+  namespace :admins do
+    get 'users/index'
+    get 'users/edit'
+  end
+  devise_for :admins, controllers: {
+    sessions: 'admins/sessions',
+  }
+
   devise_for :users,controllers:{
     registrations: "users/registrations",
     passwords: "users/passwords",
@@ -29,7 +45,13 @@ Rails.application.routes.draw do
     get   'inquiries'         => 'inquiries#index'     # 入力画面
     post  'inquiries/confirm' => 'inquiries#confirm'   # 確認画面
     post  'inquiries/thanks'  => 'inquiries#thanks'    # 送信完了画面
+  end
 
+  namespace :admins do
+    root to: "homes#top"
+    resources :users,only:[:index, :edit, :update]
+    resources :posts,only: [:index,:show,:destroy]
+    resources :questions,only: [:index,:show,:destroy]
   end
 
 end
