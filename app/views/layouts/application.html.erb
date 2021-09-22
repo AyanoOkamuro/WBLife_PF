@@ -11,18 +11,19 @@
   </head>
 
   <body>
-    <header class="border-bottom">
+    <!--ヘッダー部分-->
+    <header class="border-bottom mb-5">
       <nav class="navbar navbar-expand-lg px-4 pt-4 pb-3">
         <div class="container-fluid">
-          <!--<= if admin_signed_in? %>-->
-          <!--  <span>-->
-          <!--    <= link_to image_tag("naganocake-logo.jpg", size: "120x120"), admin_root_path %>-->
-          <!--  </span>-->
-          <!--< else %>-->
-          <!--  <span>-->
-          <!--    <= link_to image_tag("naganocake-logo.jpg", size: "120x120"), root_path, data: {"turbolinks" => false} %>-->
-          <!--  </span>-->
-          <!--< end %>-->
+          <% if admin_signed_in? %>
+            <span>
+              <%= link_to "WBLife", admin_root_path %>
+            </span>
+          <% else %>
+            <span>
+              <%= link_to "WBLife", root_path, data: {"turbolinks" => false} %>
+            </span>
+          <% end %>
             <div class="row">
               <div class="col-12 collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                 <% if user_signed_in? %>
@@ -69,7 +70,7 @@
                   </ul>
                 <% end %>
               </div>
-
+              <!--フラッシュメッセージ-->
               <div class="offset-2 col-5 mt-3 justify-content-end d-flex">
                 <span class="text-dark"><%= notice %></span>
                 <span class="text-danger"><%= alert %></span>
@@ -78,18 +79,19 @@
         </div>
       </nav>
     </header>
+    <!--メイン部分-->
     <%= yield %>
-    <footer>
-      <div class='container mt-5'>
-        <div class='row'>
-          <div class='mx-auto'>
-            <% if user_signed_in? %>
-              <p><%= link_to ' お問合せ',inquiries_path,class: 'nav-link text-dark' %></p>
-            <% else %>
-            <% end %>
-          </div>
-        </div>
-      </div>
+    <!--フッター部分-->
+    <footer class="border border-top fixed-bottom mt-5">
+      <nav class="navbar">
+        <span class="navbar-text m-auto">
+          <% if user_signed_in? %>
+            <p><%= link_to ' お問合せ',inquiries_path,class: 'nav-link text-dark' %></p>
+          <% else %>
+          <% end %>
+        </span>
+      </nav>
     </footer>
+
   </body>
 </html>
