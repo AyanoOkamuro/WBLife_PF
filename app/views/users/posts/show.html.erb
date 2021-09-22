@@ -1,60 +1,57 @@
-<div class="container mt-5 pt-2">
-  <div class="row">
-    <div class="col">
-      <%= attachment_image_tag @post, :image, format: "jpeg", fallback: "no_image.jpg", size: "400x300" %>
+<div class="col-md-10 col-md-offset-1 mx-auto postShow-wrap">
+  <div class="row post-wrap">
+    <div class="col-md-8">
+      <div class="card-left">
+        <%= attachment_image_tag @post, :image, format: "jpeg", fallback: "no_image.jpg", size: "200x200", class: "card-img-top" %>
+      </div>
     </div>
-    <div class="col">
-      <div class="row mb-5">
-        <h2 class="font-weight-bold"><%= @post.body %></h2>
-      </div>
-      <% if @post.liked_by?(current_user) %>
-        <%= link_to post_likes_path(@post), method: :delete do %>
-          <i class="fa fa-heart fa-xs" aria-hidden="true"  style="color: red;">
-            <%= @post.likes.count %>
-          </i>
-        <% end %>
-      <% else %>
-        <%= link_to post_likes_path(@post), method: :post do %>
-          <i class="fa fa-heart fa-xs" aria-hidden="true">
-            <%= @post.likes.count %>
-          </i>
-        <% end %>
-      <% end %>
-      <div class="row mt-5">
-        <% if @user.id == current_user.id %>
-          <div class="col-6">
-            <%= link_to "編集する", edit_post_path(@post), class: "btn btn-outline-dark" %>
+    <div class="col-md-4">
+      <div class="card-right">
+        <div class="card-right-comment">
+          <div class="card-right-name">
+            <%= link_to user_path(@post.user), class: "no-text-decoration" do %>
+              <%= attachment_image_tag @post.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size: "40x40", class: "post-profile-icon" %>
+            <% end %>
+             <%= link_to user_path(@post.user), class: "black-color no-text-decoration post-user-name",
+              title: @post.user.nickname do %>
+              <strong><%= @post.user.nickname %></strong>
+            <% end %>
+            <% if @post.user_id == current_user.id %>
+              <%= link_to post_path(@post), method: :delete, class: "ml-auto mx-0 my-auto" do %>
+                <div class="delete-post-icon"></div>
+              <% end %>
+            <% end %>
           </div>
-          <div class="col-6">
-            <%= link_to "削除する", post_path, class: "btn btn-outline-dark", method: :delete, data: {confirm: "この投稿を消しますか？"} %>
+          <div class="m-2">
+            <strong>
+              <%= @post.body %>
+            </strong>
           </div>
-        <% end %>
-      </div>
-      <div class="row">
-        <table>
-          <% @post.comments.each do |comment| %>
-            <tbody>
-              <tr>
-                <td>
-                  <%= link_to attachment_image_tag(comment.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"40x40"), user_path(comment.user_id) %><br>
-                  <%= link_to comment.user.nickname, user_path(comment.user_id) %>
-                </td>
-                <td style="padding: 10px;">
-                  <%= comment.comment %>
-                </td>
-                <% if comment.user == current_user %>
-                  <td>
-                    <%= link_to "削除", post_comment_path(comment.post, comment), class: "btn btn-sm btn-danger", method: :delete %>
-                  </td>
-                <% end %>
-              </tr>
-            </tbody>
+        </div>
+        <div class="row parts">
+          <div id="like-icon-post-<%= @post.id.to_s %>">
+            <% if @post.liked_by?(current_user) %>
+              <%= link_to post_likes_path(@post), method: :delete do %>
+                <i class="fa fa-heart fa-xs" aria-hidden="true"  style="color: red;">
+                  <%= @post.likes.count %>
+                </i>
+              <% end %>
+            <% else %>
+              <%= link_to post_likes_path(@post), method: :post do %>
+                <i class="fa fa-heart fa-xs" aria-hidden="true">
+                  <%= @post.likes.count %>
+                </i>
+              <% end %>
+            <% end %>
+          </div>
+        </div>
+        <div class="row parts" id="comment-form-post-<%= @post.id.to_s %>">
+          <%= form_with model: [@post, Comment.new],  class: "w-100" do |f| %>
+            <%= f.hidden_field :user_id, value: current_user.id %>
+            <%= f.hidden_field :post_id, value: @post.id %>
+            <%= f.text_field :comment, class: "form-control comment-input border-0", placeholder: "コメント ...", autocomplete: :off %>
           <% end %>
-        </table>
-        <%= form_with(model:[@post, @comment], local: true) do |f| %>
-          <%= f.text_area :comment, size: "90x5" %>
-          <%= f.submit "送信" %>
-        <% end %>
+        </div>
       </div>
     </div>
   </div>

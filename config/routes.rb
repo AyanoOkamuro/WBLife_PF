@@ -1,17 +1,5 @@
 Rails.application.routes.draw do
 
-  namespace :admins do
-    get 'questions/index'
-    get 'questions/show'
-  end
-  namespace :admins do
-    get 'posts/index'
-    get 'posts/show'
-  end
-  namespace :admins do
-    get 'users/index'
-    get 'users/edit'
-  end
   devise_for :admins, controllers: {
     sessions: 'admins/sessions',
   }
