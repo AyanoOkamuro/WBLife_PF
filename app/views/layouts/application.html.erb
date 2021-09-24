@@ -30,9 +30,9 @@
             <span class="text-danger"><%= alert %></span>
           </div>
           <div class="row">
-            <div class="col-12 collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-              <% if user_signed_in? %>
-                <ul class="nav navbar-nav">
+            <div class="col-12 collapse navbar-collapse justify-content-end" id="navbarNav">
+              <ul class="nav navbar-nav">
+                <% if user_signed_in? %>
                   <li class="nav-item">
                     <%= link_to "マイページ", user_path(current_user), class:"btn btn-md btn-outline-secondary mr-5" %>
                   </li>
@@ -45,9 +45,7 @@
                   <li class="nav-item">
                     <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"btn btn-md btn-outline-secondary mr-3" %>
                   </li>
-                </ul>
-              <% elsif admin_signed_in? %>
-                <ul class="nav navbar-nav">
+                <% elsif admin_signed_in? %>
                   <li class="nav-item">
                     <%= link_to "会員一覧", admins_users_path, class:"btn btn-md btn-outline-secondary mr-5" %>
                   </li>
@@ -60,17 +58,15 @@
                   <li class="nav-item">
                     <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:"btn btn-md btn-outline-secondary mr-3" %>
                   </li>
-                </ul>
-              <% else %>
-                <ul class="nav navbar-nav">
+                <% else %>
                   <li class="nav-item">
                     <%= link_to "新規登録", new_user_registration_path, class:"btn btn-md btn-outline-secondary mr-5" %>
                   </li>
                   <li class="nav-item">
                     <%= link_to "ログイン", new_user_session_path, class:"btn btn-md btn-outline-secondary mr-3" %>
                   </li>
-                </ul>
-              <% end %>
+                <% end %>
+              </ul>
             </div>
           </div>
         </div>
