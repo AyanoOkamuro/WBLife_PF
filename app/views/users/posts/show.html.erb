@@ -1,57 +1,66 @@
-<div class="container">
-  <div class="row">
-    <div class="card" style="width:60rem;">
-      <div class="row no-gutters">
-        <div class="col-md-8 post_image">
-          <%= attachment_image_tag @post, :image, format: "jpeg", fallback: "no_image.jpg", class: "card-img-top" %>
-        </div>
-        <div class="col-md-4">
-          <div class="card-body">
-            <div class="card-comment">
-              <div class="card-name">
-                <%= link_to user_path(@post.user), class: "no-text-decoration" do %>
-                  <%= attachment_image_tag @post.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size: "40x40", class: "rounded-circle" %>
-                <% end %>
-                <%= link_to @post.user.nickname, user_path(@post.user), class: "black-color no-text-decoration" %>
-              </div>
-              <strong>
-                <%= @post.body %>
-              </strong>
-              <% @post.comments.each do |comment| %>
-                <div class="mb-2">
-                  <%= link_to attachment_image_tag(comment.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"20x20", class: "rounded-circle"), user_path(comment.user_id) %>
-                  <%= link_to comment.user.nickname, user_path(comment.user_id), class: "no-text-decoration black-color" %>
-                  <%= comment.comment %>
-                  <% if comment.user == current_user %>
-                    <%= link_to "削除", post_comment_path(comment.post, comment), class: "btn btn-sm btn-danger", method: :delete %>
-                  <% end %>
-                </div>
+<div class="conteiner mt-5">
+  <div class="col-md-8 col-md-2 mx-auto">
+    <div class="card-wrap">
+      <div class="card">
+        <div class="card-header align-items-center d-flex">
+          <%= link_to user_path(@post.user) do %>
+            <%= attachment_image_tag @post.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size: "40x40", class: "rounded-circle" %>
+          <% end %>
+          <div class="post-user-name ml-3">
+            <strong>
+              <%= @post.user.nickname %>
+            </strong>
+          </div>
+          <% if @post.user_id == current_user.id %>
+            <div class="post-edit-destroy">
+              <%= link_to edit_post_path(@post), class: "btn btn-default" do %>
+                <i class="far fa-edit"></i>
               <% end %>
-              <% if @post.liked_by?(current_user) %>
-                <%= link_to post_likes_path(@post), method: :delete do %>
-                  <i class="fa fa-heart fa-xs" aria-hidden="true"  style="color: red;">
-                    <%= @post.likes.count %>
-                  </i>
-                <% end %>
-              <% else %>
-                <%= link_to post_likes_path(@post), method: :post do %>
-                  <i class="fa fa-heart fa-xs" aria-hidden="true">
-                    <%= @post.likes.count %>
-                  </i>
-                <% end %>
-              <% end %>
-              <div class="row my-3">
-                <%= form_with model: [@post, Comment.new],  class: "w-100", local: true do |f| %>
-                  <%= f.hidden_field :user_id, value: current_user.id %>
-                  <%= f.hidden_field :post_id, value: @post.id %>
-                  <%= f.text_field :comment, class: "form-control comment-input border-0", placeholder: "コメント ...", autocomplete: :off %>
-                <% end %>
-              </div>
-              <% if @post.user_id == current_user.id %>
-                <%= link_to "編集する", edit_post_path(@post), class: "btn btn-outline-dark" %>
-                <%= link_to "削除する", post_path, class: "btn btn-outline-dark", method: :delete, data: {confirm: "この投稿を消しますか？"} %>
+              <%= link_to post_path, method: :delete, data: {confirm: "この投稿を消しますか？"}, class: "btn btn-default" do %>
+                <i class="far fa-trash-alt"></i>
               <% end %>
             </div>
+          <% end %>
+        </div>
+        <%= attachment_image_tag @post, :image, format: "jpeg", fallback: "no_image.jpg", class: "card-img-top" %>
+        <div class="card-body">
+          <div class="row ml-1">
+            <% if @post.liked_by?(current_user) %>
+              <%= link_to post_likes_path(@post), method: :delete do %>
+                <i class="fa fa-heart" aria-hidden="true"  style="color: red;">
+                  <%= @post.likes.count %>
+                </i>
+              <% end %>
+            <% else %>
+              <%= link_to post_likes_path(@post), method: :post do %>
+                <i class="fa fa-heart" aria-hidden="true">
+                  <%= @post.likes.count %>
+                </i>
+              <% end %>
+            <% end %>
+          </div>
+          <div class="my-3">
+            <strong><%= @post.user.nickname %></strong>
+            <%= @post.body %>
+          </div>
+          <% @post.comments.each do |comment| %>
+            <div class="mb-2">
+              <%= link_to attachment_image_tag(comment.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"20x20", class: "rounded-circle"), user_path(comment.user_id) %>
+              <strong><%= comment.user.nickname %></strong>
+              <%= comment.comment %>
+              <% if comment.user == current_user %>
+                <%= link_to post_comment_path(comment.post, comment), method: :delete, class: "btn btn-default" do %>
+                  <i class="fas fa-times"></i>
+                <% end %>
+              <% end %>
+            </div>
+          <% end %>
+          <div class="row mt-3">
+            <%= form_with model: [@post, Comment.new],  class: "w-100", local: true do |f| %>
+              <%= f.hidden_field :user_id, value: current_user.id %>
+              <%= f.hidden_field :post_id, value: @post.id %>
+              <%= f.text_field :comment, class: "form-control comment-input border-0", placeholder: "コメント ...", autocomplete: :off %>
+            <% end %>
           </div>
         </div>
       </div>

@@ -1,81 +1,63 @@
-<div class="container">
- <div class="row mt-5">
-  <h3 class="under">新規会員登録</h3>
- </div>
-</div>
-
 <div class="container mt-5">
-  <%= form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f| %>
-    <div class="form-group">
-      <div class="col-sm-3"><%= f.label :ニックネーム, class:"control-label" %></div>
-      <div class="col-sm-3">
-        <%= f.text_field :nickname, autofocus: true, class:"form-control border-dark" %>
-        <% errors_hash(resource)[:nickname].each do |error_msg| %>
-          <p class="text-xs text-danger"><%= error_msg %></p>
+  <div class="col mx-auto">
+    <div class="card form-wrap">
+      <div class="card-body">
+        <h4 class="card-title mb-4 text-center">
+          アカウント登録
+        </h4>
+        <%= form_with model: @user, url: user_registration_path, id: 'new_user', class: 'new_user', local: true do |f| %>
+          <div class="form-group bmd-form-group">
+            <%= f.label :ニックネーム, class:"bmd-label-floating" %>
+            <%= f.text_field :nickname, autofocus: true, class:"form-control border-dark" %>
+            <% errors_hash(resource)[:nickname].each do |error_msg| %>
+              <p class="text-xs text-danger"><%= error_msg %></p>
+            <% end %>
+          </div>
+          <div class="form-group bmd-form-group">
+            <%= f.label :メールアドレス, class:"bmd-label-floating" %>
+              <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control border-dark" %>
+              <% errors_hash(resource)[:email].each do |error_msg| %>
+                <p class="text-xs text-danger"><%= error_msg %></p>
+              <% end %>
+          </div>
+          <div class="form-group bmd-form-group">
+            <%= f.label :パスワード, class:"bmd-label-floating" %>
+            <% if @minimum_password_length %>
+              (<%= @minimum_password_length %>文字以上)
+            <% end %>
+            <%= f.password_field :password, autocomplete: "new-password" ,class:"form-control border-dark"%>
+            <% errors_hash(resource)[:password].each do |error_msg| %>
+              <p class="text-xs text-danger"><%= error_msg %></p>
+            <% end %>
+          </div>
+          <div class="form-group bmd-form-group">
+            <%= f.label :パスワード（確認用）, class:"bmd-label-floating" %>
+            <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control border-dark" %>
+          </div>
+          <div class="form-group bmd-form-group">
+            <%= f.label :性別, class:"bmd-form-group" %><br>
+              <%= f.radio_button :gender, :男性 %>
+              <%= f.label :男性  %>
+              <%= f.radio_button :gender, :女性 %>
+              <%= f.label :女性  %>
+              <%= f.radio_button :gender, :その他 %>
+              <%= f.label :その他  %>
+          </div>
+          <div class="bmd-form-group">
+            <%= f.label :年代, class:"bmd-form-group" %><br>
+            <%= f.select :age, User.ages.keys, {prompt: "選択してください"}, class:"prefecture-select" %>
+          </div>
+          <div class="form-group">
+            <%= f.submit "アカウント登録", class:"btn btn-outline-dark btn-block btn-raised mt-3" %>
+          </div>
         <% end %>
-      </div>
-      
-    <div class="form-group">
-      <div class="col-sm-3"><%= f.label :メールアドレス, class:"control-label" %></div>
-      <div class="col-sm-3">
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class:"form-control border-dark" %>
-        <% errors_hash(resource)[:email].each do |error_msg| %>
-          <p class="text-xs text-danger"><%= error_msg %></p>
-        <% end %>
+        <div class="row justify-content-center">
+          <h5>既に登録済みの方は</h5>
+        </div>
+        <div class="row justify-content-center">
+          <p><%= link_to "こちら", new_user_session_path %>からログインしてください。</p>
+        </div>
       </div>
     </div>
-    
-    <div class="form-group">
-      <div class="col-sm-3"><%= f.label :性別, class:"control-label" %></div>
-      <div class="col-sm-3">
-          <%= f.radio_button :gender, :男性 %>
-          <%= f.label :男性  %>
-          <%= f.radio_button :gender, :女性 %>
-          <%= f.label :女性  %>
-          <%= f.radio_button :gender, :その他 %>
-          <%= f.label :その他  %>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <div class="col-sm-3"><%= f.label :年代, class:"control-label" %></div>
-      <div class="col-sm-3">
-        <%= f.select :age, User.ages.keys, {prompt: "選択してください"}, class:"prefecture-select" %>
-      </div>
-    </div>
-    
-    <div class="form-group">
-      <div class="col-sm-3"><%= f.label :パスワード, class:"control-label" %>
-        <% if @minimum_password_length %>
-          (<%= @minimum_password_length %>文字以上)</div>
-        <% end %><br>
-      <div class="col-sm-3">
-        <%= f.password_field :password, autocomplete: "new-password" ,class:"form-control border-dark"%>
-        <% errors_hash(resource)[:password].each do |error_msg| %>
-          <p class="text-xs text-danger"><%= error_msg %></p>
-        <% end %>
-      </div>
-    </div>
-  
-    <div class="form-group">
-      <div class="col-sm-3"><%= f.label :パスワード（確認用）, class:"control-label" %></div>
-      <div class="col-sm-3">
-        <%= f.password_field :password_confirmation, autocomplete: "new-password", class:"form-control border-dark" %>
-      </div>
-    </div>
-  
-    <div class="form-group">
-      <div class="col-sm-3"></div>
-      <div class="col-sm-3">
-        <%= f.submit "新規登録", class:"btn btn-outline-dark btn-block mt-3" %></div>
-      </div>
-    <% end %>
-  
-  <div class="row mt-5 ml-5">
-    <h4>既に登録済みの方</h4>
   </div>
-  <div class="row ml-4 mt-1">
-    <p class="pl-5"><u class="mr-3"><%= link_to "こちら", new_user_session_path %></u>からログインしてください。</p>
-  </div>
-
 </div>

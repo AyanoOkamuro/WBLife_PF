@@ -12,7 +12,6 @@ Rails.application.routes.draw do
 
   scope module: :users do
     root to: "homes#top"
-    get "about" => "homes#about"
     resources :users,only:[:show, :edit, :update]do
       get "users/unsubscribe" => "users#unsubscribe"
       patch "users/withdraw" => "users#withdraw"

@@ -1,22 +1,24 @@
-<div class="container">
-  <div class="row">
-    <div class="col-12">
-      <h3 class="my-5 under">新規登録</h3>
-    </div>
-    <div class="col-12">
-      <%= form_with model:@post, url: posts_path,  local: true do |f| %>
-        <div class="row mb-3">
-          <div class="col-3 font-weight-bold"><%= f.label :投稿画像 %></div>
-          <div class="col-4 mr-auto"><%= f.attachment_field :image %></div>
-        </div>
-        <div class="row mb-3">
-          <div class="col-3 font-weight-bold"><%= f.label :投稿内容 %></div>
-          <div class="col-4 mr-auto"><%= f.text_area :body %></div>
-        </div>
-        <div class="offset-3 col-4">
-          <%= f.submit "投稿する", class: "btn btn-outline-dark px-4" %>
-        </div>
-      <% end %>
+<div class="container mt-5">
+  <div class="col mx-auto">
+    <div class="card form-wrap">
+      <div class="card-body">
+        <h4 class="card-title mb-4 text-center">
+          新規投稿
+        </h4>
+        <%= form_with model: @post, url: posts_path,  local: true do |f| %>
+          <div class="bmd-form-group">
+            <%= f.label :投稿画像, class:"bmd-label-floating" %><br>
+            <%= f.attachment_field :image, autocomplete: "image" %>
+          </div>
+          <div class="form-group bmd-form-group">
+            <%= f.label :投稿内容, class:"bmd-label-floating mt-2" %>
+            <%= f.text_area :body, autofocus: true, autocomplete: "body", class:"form-control border-dark" %>
+          </div>
+          <div class="form-group">
+            <%= f.submit "投稿する", class:"btn btn-outline-dark btn-block btn-raised mt-3" %>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>
