@@ -1,63 +1,134 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-3 mt-5">
+<div class="container mt-5">
+  <div class="row border-bottom pb-3">
+    <div class="col-md-1 offset-md-2">
       <%= attachment_image_tag @user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size: "100x100", class: "rounded-circle" %>
-      <table class="table">
-        <tbody>
-          <tr>
-            <th>ニックネーム</th>
-            <th><%= @user.nickname %></th>
-          </tr>
-          <tr>
-            <th>フォロー</th>
-            <th><%= link_to @user.followings.count, user_followings_path(@user.id) %></th>
-          </tr><tr>
-            <th>フォロワー</th>
-            <th><%= link_to @user.followers.count, user_followers_path(@user.id) %></th>
-          </tr>
-        </tbody>
-      </table>
-      <div class="row">
-        <%= render "users/relationships/info", user: @user %>
-      </div>
-      <div class="row">
-        <div class="col-6">
-          <%= link_to "編集", edit_user_path(@user.id) %>
-        </div>
-        <div class="col-6">
-          <%= link_to "退会", user_users_unsubscribe_path(@user.id) %>
-        </div>
-      </div>
     </div>
-    <div class="col-md-8 offset-md-1 mt-5">
-      <h2><%= @user.nickname %>の投稿</h2>
+    <div class="col-md-8 offset-md-1">
       <div class="row">
-        <% @posts.each do |post| %>
+        <div class="col-3 font-weight-bold">
+          <h4><%= @user.nickname %></h4>
+        </div>
+        <div class="col-3 mt-2"><%= @user.age %></div>
+        <div class="col-3 mt-2"><%= @user.gender %></div>
+      </div>
+      <div class="row my-2">
+        <div class="col-4">
+          <strong>
+            <%= link_to @user.followings.count, user_followings_path(@user.id) %>
+          </strong>
+            フォロー中
+        </div>
+        <div class="col-4">
+          <strong>
+            <%= link_to @user.followers.count, user_followers_path(@user.id) %>
+          </strong>
+            フォロワー
+        </div>
+      </div>
+      <div class="row">
+        <% if @user.id == current_user.id %>
           <div class="col-4">
-            <%= link_to post_path(post.id) do %>
-              <%= attachment_image_tag post, :image, format: "jpeg", fallback: "no_image.jpg", size: "200x200" %>
-            <% end %>
-            <div class="row">
-            <% if post.liked_by?(current_user) %>
-              <%= link_to post_likes_path(post), method: :delete do %>
-                <i class="fa fa-heart fa-xs" aria-hidden="true"  style="color: red;">
-                  <%= post.likes.count %>
-                </i>
-              <% end %>
-            <% else %>
-              <%= link_to post_likes_path(post), method: :post do %>
-                <i class="fa fa-heart fa-xs" aria-hidden="true">
-                  <%= post.likes.count %>
-                </i>
-              <% end %>
-            </div>
-            <% end %>
+            <%= link_to "編集", edit_user_path(@user.id), class:"btn btn-outline-success btn-block btn-radius" %>
+          </div>
+          <div class="col-4">
+            <%= link_to "退会", user_users_unsubscribe_path(@user.id), class:"btn btn-outline-info btn-block btn-radius grow" %>
+          </div>
+        <% else %>
+          <div class="col-8">
+            <%= render "users/relationships/info", user: @user %>
           </div>
         <% end %>
       </div>
-      <div class="row justify-content-center">
-        <%= paginate @posts %>
-      </div>
     </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-4">
+      <table class="table table-striped">
+        <thead class="thead-light">
+          <tr>
+            <th><%= @user.nickname %>の過去の質問</th>
+            <th colspan="1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @questions.each do |question| %>
+            <tr>
+              <td>
+                <%= link_to question.title, question_path(question.id) %>
+              </td>
+              <td>
+                回答 <%= question.answers.count %>件
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-8">
+      <% if @user.posts.any? %>
+        <% @posts.each do |post| %>
+          <div class="card-wrap mb-4">
+            <div class="card">
+              <div class="card-header align-items-center d-flex">
+                <%= link_to user_path(post.user) do %>
+                  <%= attachment_image_tag post.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size: "40x40", class: "rounded-circle" %>
+                <% end %>
+                <div class="post-user-name ml-3">
+                  <strong>
+                    <%= post.user.nickname %>
+                  </strong>
+                </div>
+                <% if post.user_id == current_user.id %>
+                  <div class="post-edit-destroy">
+                    <%= link_to edit_post_path(post), class: "btn btn-default" do %>
+                      <i class="far fa-edit"></i>
+                    <% end %>
+                    <%= link_to post_path(post), method: :delete, data: {confirm: "この投稿を消しますか？"}, class: "btn btn-default" do %>
+                      <i class="far fa-trash-alt"></i>
+                    <% end %>
+                  </div>
+                <% end %>
+              </div>
+              <%= link_to post_path(post) do %>
+                <%= attachment_image_tag post, :image, format: "jpeg", fallback: "no_image.jpg", class: "card-img-top" %>
+              <% end %>
+              <div class="card-body">
+                <div class="row ml-1">
+                  <% if post.liked_by?(current_user) %>
+                    <%= link_to post_likes_path(post), method: :delete do %>
+                      <i class="fa fa-heart" aria-hidden="true"  style="color: red;">
+                        <%= post.likes.count %>
+                      </i>
+                    <% end %>
+                  <% else %>
+                    <%= link_to post_likes_path(post), method: :post do %>
+                      <i class="fa fa-heart" aria-hidden="true">
+                        <%= post.likes.count %>
+                      </i>
+                    <% end %>
+                  <% end %>
+                  <div class="ml-2">
+                    <%= link_to post_path(post) do %>
+                      <i class="far fa-comments">
+                        <strong><%= post.comments.count %></strong>
+                      </i>
+                    <% end %>
+                  </div>
+                </div>
+                <div class="my-3">
+                  <strong><%= post.user.nickname %></strong>
+                  <%= post.body %>
+                </div>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      <% else %>
+        <p class="text-center mt-3">投稿はありません</p>
+      <% end %>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+    <%= paginate @posts %>
   </div>
 </div>

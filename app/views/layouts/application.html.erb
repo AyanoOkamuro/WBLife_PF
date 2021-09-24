@@ -12,69 +12,66 @@
 
   <body>
     <!--ヘッダー部分-->
-    <header class="border-bottom mb-5">
+    <header class="border-bottom">
       <nav class="navbar navbar-expand-lg px-4 pt-4 pb-3">
         <div class="container-fluid">
           <% if admin_signed_in? %>
             <span>
-              <%= link_to "WBLife", admin_root_path %>
+              <%= link_to image_tag("logo.jpg", size: "90x80"), admins_root_path %>
             </span>
           <% else %>
             <span>
-              <%= link_to "WBLife", root_path, data: {"turbolinks" => false} %>
+              <%= link_to image_tag("logo.jpg", size: "90x80"), root_path, data: {"turbolinks" => false} %>
             </span>
           <% end %>
-            <div class="row">
-              <div class="col-12 collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-                <% if user_signed_in? %>
-                  <ul class="nav navbar-nav">
-                    <li class="nav-item">
-                      <%= link_to "マイページ", user_path(current_user), class:"btn btn-md btn-outline-secondary mr-5" %>
-                    </li>
-                    <li class="nav-item">
-                      <%= link_to "質問掲示板", questions_path, class:"btn btn-md btn-outline-secondary mr-5" %>
-                    </li>
-                    <li class="nav-item">
-                      <%= link_to "みんなの投稿", posts_path, class:"btn btn-md btn-outline-secondary mr-5" %>
-                    </li>
-                    <li class="nav-item">
-                      <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"btn btn-md btn-outline-secondary mr-3" %>
-                    </li>
-                  </ul>
-                <% elsif admin_signed_in? %>
-                  <ul class="nav navbar-nav">
-                    <li class="nav-item">
-                      <%= link_to "会員一覧", admins_users_path, class:"btn btn-md btn-outline-secondary mr-5" %>
-                    </li>
-                    <li class="nav-item">
-                      <%= link_to "質問掲示板", admins_questions_path, class:"btn btn-md btn-outline-secondary mr-5" %>
-                    </li>
-                    <li class="nav-item">
-                      <%= link_to "みんなの一覧", admins_posts_path, class:"btn btn-md btn-outline-secondary mr-5" %>
-                    </li>
-                    <li class="nav-item">
-                      <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:"btn btn-md btn-outline-secondary mr-3" %>
-                    </li>
-                  </ul>
-                <% else %>
-                  <ul class="nav navbar-nav">
-                    <li class="nav-item">
-                      <%= link_to "未来のライダーへ", about_path, class:"btn btn-md btn-outline-secondary mr-5" %>
-                    </li>
-                    <li class="nav-item">
-                      <%= link_to "新規登録", new_user_registration_path, class:"btn btn-md btn-outline-secondary mr-5" %>
-                    </li>
-                    <li class="nav-item">
-                      <%= link_to "ログイン", new_user_session_path, class:"btn btn-md btn-outline-secondary mr-3" %>
-                    </li>
-                  </ul>
-                <% end %>
-              </div>
-              <!--フラッシュメッセージ-->
-              <div class="offset-2 col-5 mt-3 justify-content-end d-flex">
-                <span class="text-dark"><%= notice %></span>
-                <span class="text-danger"><%= alert %></span>
-              </div>
+          <!--フラッシュメッセージ-->
+          <div class="col mt-3 justify-content-center d-flex">
+            <span class="text-dark"><%= notice %></span>
+            <span class="text-danger"><%= alert %></span>
+          </div>
+          <div class="row">
+            <div class="col-12 collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+              <% if user_signed_in? %>
+                <ul class="nav navbar-nav">
+                  <li class="nav-item">
+                    <%= link_to "マイページ", user_path(current_user), class:"btn btn-md btn-outline-secondary mr-5" %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to "質問掲示板", questions_path, class:"btn btn-md btn-outline-secondary mr-5" %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to "みんなの投稿", posts_path, class:"btn btn-md btn-outline-secondary mr-5" %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"btn btn-md btn-outline-secondary mr-3" %>
+                  </li>
+                </ul>
+              <% elsif admin_signed_in? %>
+                <ul class="nav navbar-nav">
+                  <li class="nav-item">
+                    <%= link_to "会員一覧", admins_users_path, class:"btn btn-md btn-outline-secondary mr-5" %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to "質問掲示板", admins_questions_path, class:"btn btn-md btn-outline-secondary mr-5" %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to "みんなの一覧", admins_posts_path, class:"btn btn-md btn-outline-secondary mr-5" %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:"btn btn-md btn-outline-secondary mr-3" %>
+                  </li>
+                </ul>
+              <% else %>
+                <ul class="nav navbar-nav">
+                  <li class="nav-item">
+                    <%= link_to "新規登録", new_user_registration_path, class:"btn btn-md btn-outline-secondary mr-5" %>
+                  </li>
+                  <li class="nav-item">
+                    <%= link_to "ログイン", new_user_session_path, class:"btn btn-md btn-outline-secondary mr-3" %>
+                  </li>
+                </ul>
+              <% end %>
+            </div>
           </div>
         </div>
       </nav>
@@ -82,16 +79,16 @@
     <!--メイン部分-->
     <%= yield %>
     <!--フッター部分-->
-    <footer class="border border-top fixed-bottom mt-5">
+    <footer class="footer mt-5">
       <nav class="navbar">
         <span class="navbar-text m-auto">
           <% if user_signed_in? %>
-            <p><%= link_to ' お問合せ',inquiries_path,class: 'nav-link text-dark' %></p>
+            <p><%= link_to 'お問合せ',inquiries_path,class: 'nav-link text-dark' %></p>
           <% else %>
+            <p>©︎moohportfolio</p>
           <% end %>
         </span>
       </nav>
     </footer>
-
   </body>
 </html>

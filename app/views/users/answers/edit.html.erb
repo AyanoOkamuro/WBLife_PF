@@ -1,16 +1,32 @@
-<div class="container">
-  <h2>回答編集</h2>
-  <%= form_with model:[@question, @answer], local: true do |f| %>
-    <div class="form-group">
-      <label>回答内容</label>
-      <%= f.text_area :body, class: 'form-control' %>
+<div class="container mt-5">
+  <div class="col mx-auto">
+    <div class="card form-wrap">
+      <div class="card-body">
+        <h4 class="card-title mb-5 text-center">
+          回答編集
+        </h4>
+        <div class="row my-4">
+          <div class="col-2 ml-1">
+            <h5>質問内容</h5>
+          </div>
+          <div class="col-9">
+            <h6><%= @question.body %></h6>
+          </div>
+        </div>
+        <%= form_with model: [@question, @answer], local: true do |f| %>
+          <div class="form-group bmd-form-group">
+            <%= f.label :回答内容, class:"bmd-label-floating" %>
+            <%= f.text_area :body, autocomplete: "body", class:"form-control border-dark" %>
+          </div>
+          <div class="bmd-form-group">
+            <%= f.label :画像, class:"bmd-label-floating" %><br>
+            <%= f.attachment_field :image, autocomplete: "image" %>
+          </div>
+          <div class="form-group">
+            <%= f.submit "編集内容を投稿する", class:"btn btn-outline-dark btn-block btn-raised mt-3" %>
+          </div>
+        <% end %>
+      </div>
     </div>
-    <div class="row mb-3">
-      <div class="col-3"><%= f.label :投稿画像 %></div>
-      <div class="col-4 mr-auto"><%= f.attachment_field :image %></div>
-    </div>
-    <div class="text-center">
-      <%= f.submit "編集内容を投稿する", class: "btn btn-primary" %>
-    </div>
-  <% end %>
+  </div>
 </div>

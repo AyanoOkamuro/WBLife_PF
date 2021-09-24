@@ -1,31 +1,66 @@
-<div class="container mt-5">
-  <div class="row">
-    <h2 class="mb-3">投稿一覧</h2>
-  </div>
-  <div class="row">
+<div class="conteiner mt-5">
+  <div class="col-md-8 col-md-2 mx-auto">
+    <div class="col-md-1 ml-md-auto">
+      <%= link_to new_post_path, class: "btn btn-default" do %>
+        <h4><i class="fas fa-plus"></i></h4>
+      <% end %>
+    </div>
     <% @posts.each do |post| %>
-      <div class="col-3">
-        <%= link_to post_path(post.id) do %>
-          <%= attachment_image_tag post, :image, format: "jpeg", fallback: "no_image.jpg", size: "200x200" %>
-        <% end %>
-        <p class="my-2"><%= link_to post.user.nickname, user_path(post.user_id),class:"text-dark" %></p>
-        <% if post.liked_by?(current_user) %>
-          <%= link_to post_likes_path(post), method: :delete do %>
-            <i class="fa fa-heart fa-xs" aria-hidden="true"  style="color: red;">
-              <%= post.likes.count %>
-            </i>
+      <div class="card-wrap mt-1 mb-4">
+        <div class="card">
+          <div class="card-header align-items-center d-flex">
+            <%= link_to user_path(post.user) do %>
+              <%= attachment_image_tag post.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size: "40x40", class: "rounded-circle" %>
+            <% end %>
+            <div class="post-user-name ml-3">
+              <strong>
+                <%= post.user.nickname %>
+              </strong>
+            </div>
+            <% if post.user_id == current_user.id %>
+              <div class="post-edit-destroy">
+                <%= link_to edit_post_path(post), class: "btn btn-default" do %>
+                  <i class="far fa-edit"></i>
+                <% end %>
+                <%= link_to post_path(post), method: :delete, data: {confirm: "この投稿を消しますか？"}, class: "btn btn-default" do %>
+                  <i class="far fa-trash-alt"></i>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <%= link_to post_path(post) do %>
+            <%= attachment_image_tag post, :image, format: "jpeg", fallback: "no_image.jpg", class: "card-img-top" %>
           <% end %>
-        <% else %>
-          <%= link_to post_likes_path(post), method: :post do %>
-            <i class="fa fa-heart fa-xs" aria-hidden="true">
-              <%= post.likes.count %>
-            </i>
-          <% end %>
-        <% end %>
+          <div class="card-body">
+            <div class="row ml-1">
+              <% if post.liked_by?(current_user) %>
+                <%= link_to post_likes_path(post), method: :delete do %>
+                  <i class="fa fa-heart" aria-hidden="true"  style="color: red;">
+                    <%= post.likes.count %>
+                  </i>
+                <% end %>
+              <% else %>
+                <%= link_to post_likes_path(post), method: :post do %>
+                  <i class="fa fa-heart" aria-hidden="true">
+                    <%= post.likes.count %>
+                  </i>
+                <% end %>
+              <% end %>
+              <div class="ml-2">
+                <%= link_to post_path(post) do %>
+                  <i class="far fa-comments">
+                    <strong><%= post.comments.count %></strong>
+                  </i>
+                <% end %>
+              </div>
+            </div>
+            <div class="my-3">
+              <strong><%= post.user.nickname %></strong>
+              <%= post.body %>
+            </div>
+          </div>
+        </div>
       </div>
     <% end %>
-  </div>
-  <div class="row justify-content-center">
-    <%= paginate @posts %>
   </div>
 </div>

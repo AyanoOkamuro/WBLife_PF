@@ -1,29 +1,32 @@
-<div class="container">
-  <div class="row mt-5">
-    <h3 class="under">会員情報編集</h3>
+<div class="container mt-5">
+  <div class="col mx-auto">
+    <div class="card form-wrap">
+      <div class="card-body">
+        <h4 class="card-title mb-4 text-center">
+          会員情報編集
+        </h4>
+        <%= form_with model: @user, url: user_path(@user.id), method: :PATCH, local: true do |f| %>
+          <div class="form-group bmd-form-group">
+            <%= f.label :ニックネーム, class:"bmd-label-floating" %>
+            <%= f.text_field :nickname, autofocus: true, autocomplete: "nickname", class:"form-control border-dark" %>
+          </div>
+          <div class="form-group bmd-form-group">
+            <%= f.label :メールアドレス, class:"bmd-label-floating" %>
+            <%= f.email_field :email, autocomplete: "email", class:"form-control border-dark" %>
+          </div>
+          <div class="bmd-form-group">
+            <%= f.label :プロフィール画像, class:"bmd-label-floating" %><br>
+            <%= f.attachment_field :profile_image, autocomplete: "profile_image" %>
+          </div>
+          <div class="bmd-form-group">
+            <%= f.label :年代, class:"bmd-form-group mt-2" %><br>
+            <%= f.select :age, User.ages.keys, {prompt: "選択してください"}, class:"prefecture-select" %>
+          </div>
+          <div class="form-group">
+            <%= f.submit "編集内容を保存", class:"btn btn-outline-dark btn-block btn-raised mt-3" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
   </div>
-
-  <div class="container">
-    <%= form_with model: @user, url: user_path(@user.id), method: :PATCH, local: true do |f| %>
-
-      <div class="form-group row mt-5">
-        <div class="col-sm-2"><%= f.label :ニックネーム %></div>
-        <div class="col-sm-4"><%= f.text_field :nickname, class:"form-control border-dark" %></div>
-      </div>
-  
-      <div class="form-group row mt-2">
-        <div class="col-sm-2"><%= f.label :メールアドレス %></div>
-        <div class="col-sm-4"><%= f.email_field :email, autofocus: true, class:"form-control border-dark"%></div>
-      </div>
-      
-      <div class="form-group row mt-2">
-        <div class="col-sm-2"><%= f.label :プロフィール画像 %></div>
-        <div class="col-sm-4"><%= f.attachment_field :profile_image, autofocus: true, class:"form-control-file"%></div>
-      </div>
-  
-      <div class="row mt-5 mb-5">
-        <div class="offset-sm-2 col-sm-6"><%= f.submit "編集内容を保存", class:"btn btn-outline-dark font-weight-bold "%></div>
-      </div>
-    <% end %>
-  </div>
-</diV>
+</div>

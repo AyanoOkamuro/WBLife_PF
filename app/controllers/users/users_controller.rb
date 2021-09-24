@@ -3,6 +3,7 @@ class Users::UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @posts = @user.posts.page(params[:page]).reverse_order
+    @questions = @user.questions.page(params[:page]).reverse_order
   end
 
   def edit
@@ -33,7 +34,7 @@ class Users::UsersController < ApplicationController
 
 private
   def user_params
-   params.require(:user).permit(:nickname, :email, :profile_image)
+   params.require(:user).permit(:nickname, :email, :profile_image, :age)
   end
 
 end
