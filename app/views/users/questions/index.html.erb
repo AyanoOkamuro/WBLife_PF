@@ -1,7 +1,7 @@
 <div class="container mt-5">
-  <div class="row mb-3">
+  <div class="row mb-2">
     <div class="col-4">
-      <h2>質問一覧</h2>
+      <h3>質問一覧</h3>
     </div>
     <div class="col-md-1 ml-md-auto">
       <%= link_to  new_question_path, class: 'btn btn-default' do %>
@@ -10,16 +10,16 @@
     </div>
   </div>
   <div class="row">
-    <table class="table table-striped">
-      <thead class="thead-light">
-        <tr>
+    <table class="table">
+      <thead>
+        <tr class="table-active">
           <th>質問タイトル</th>
           <th>質問内容</th>
           <th colspan="2"></th>
         </tr>
       </thead>
-      <tbody>
-        <% @questions.each do |question| %>
+      <% @questions.each do |question| %>
+        <tbody>
           <tr>
             <td class="col-3">
               <%= link_to question.title, question_path(question.id) %>
@@ -40,8 +40,8 @@
               回答 <%= question.answers.count %>件
             </td>
           </tr>
-        <% end %>
-      </tbody>
+        </tbody>
+      <% end %>
     </table>
   </div>
 </div>

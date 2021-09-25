@@ -33,6 +33,11 @@ class User < ApplicationRecord
     followings.include?(user)
   end
 
+  #論理削除　
+  def active_for_authentication?
+    super && (self.is_deleted == false)
+  end
+
   attachment :profile_image
 
   enum gender: { "男性": 0, "女性": 1, "その他": 2 }

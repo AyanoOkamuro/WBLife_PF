@@ -11,64 +11,67 @@
   </head>
 
   <body>
-    <!--ヘッダー部分-->
     <header class="border-bottom">
-      <nav class="navbar navbar-expand-lg px-4 pt-4 pb-3">
-        <div class="container-fluid">
-          <% if admin_signed_in? %>
-            <span>
-              <%= link_to image_tag("logo.jpg", size: "90x80"), admins_root_path %>
-            </span>
-          <% else %>
-            <span>
-              <%= link_to image_tag("logo.jpg", size: "90x80"), root_path, data: {"turbolinks" => false} %>
-            </span>
-          <% end %>
-          <!--フラッシュメッセージ-->
-          <div class="col mt-3 justify-content-center d-flex">
-            <span class="text-dark"><%= notice %></span>
-            <span class="text-danger"><%= alert %></span>
-          </div>
-          <div class="row">
-            <div class="col-12 collapse navbar-collapse justify-content-end" id="navbarNav">
-              <ul class="nav navbar-nav">
-                <% if user_signed_in? %>
-                  <li class="nav-item">
-                    <%= link_to "マイページ", user_path(current_user), class:"btn btn-md btn-outline-secondary mr-5" %>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to "質問掲示板", questions_path, class:"btn btn-md btn-outline-secondary mr-5" %>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to "みんなの投稿", posts_path, class:"btn btn-md btn-outline-secondary mr-5" %>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"btn btn-md btn-outline-secondary mr-3" %>
-                  </li>
-                <% elsif admin_signed_in? %>
-                  <li class="nav-item">
-                    <%= link_to "会員一覧", admins_users_path, class:"btn btn-md btn-outline-secondary mr-5" %>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to "質問掲示板", admins_questions_path, class:"btn btn-md btn-outline-secondary mr-5" %>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to "みんなの一覧", admins_posts_path, class:"btn btn-md btn-outline-secondary mr-5" %>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:"btn btn-md btn-outline-secondary mr-3" %>
-                  </li>
-                <% else %>
-                  <li class="nav-item">
-                    <%= link_to "新規登録", new_user_registration_path, class:"btn btn-md btn-outline-secondary mr-5" %>
-                  </li>
-                  <li class="nav-item">
-                    <%= link_to "ログイン", new_user_session_path, class:"btn btn-md btn-outline-secondary mr-3" %>
-                  </li>
-                <% end %>
-              </ul>
-            </div>
-          </div>
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <% if admin_signed_in? %>
+          <span>
+            <%= link_to image_tag("logo.jpg", size: "90x80"), admins_root_path %>
+          </span>
+        <% else %>
+          <span>
+            <%= link_to image_tag("logo.jpg", size: "90x80"), root_path, data: {"turbolinks" => false} %>
+          </span>
+        <% end %>
+        <!--フラッシュメッセージ-->
+        <div class="col mt-3 justify-content-center d-flex">
+          <span class="text-dark"><%= notice %></span>
+          <span class="text-danger"><%= alert %></span>
+        </div>
+        <!-- ハンバーガーメニュー -->
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!-- ナビゲーションメニュー -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+          <!--会員がログインしている時-->
+            <% if user_signed_in? %>
+              <li class="nav-item">
+                <%= link_to "マイページ", user_path(current_user), class:" nav-link btn btn-md btn-outline-secondary mx-3" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "質問掲示板", questions_path, class:"nav-link btn btn-md btn-outline-secondary mx-3" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "みんなの投稿", posts_path, class:"nav-link btn btn-md btn-outline-secondary mx-3" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "ログアウト", destroy_user_session_path, method: :delete, class:"nav-link btn btn-md btn-outline-secondary mx-3" %>
+              </li>
+            <!--管理者がログインしている時-->
+            <% elsif admin_signed_in? %>
+              <li class="nav-item">
+                <%= link_to "会員一覧", admins_users_path, class:"nav-link btn btn-md btn-outline-secondary mx-3" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "質問掲示板", admins_questions_path, class:"nav-link btn btn-md btn-outline-secondary mx-3" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "みんなの投稿", admins_posts_path, class:"nav-link btn btn-md btn-outline-secondary mx-3" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "ログアウト", destroy_admin_session_path, method: :delete, class:"nav-link btn btn-md btn-outline-secondary mx-3" %>
+              </li>
+            <!--会員も管理者もログインしていない時-->
+            <% else %>
+              <li class="nav-item">
+                <%= link_to "新規登録", new_user_registration_path, class:"nav-link btn btn-md btn-outline-secondary mx-3" %>
+              </li>
+              <li class="nav-item">
+                <%= link_to "ログイン", new_user_session_path, class:"nav-link btn btn-md btn-outline-secondary mx-3" %>
+              </li>
+            <% end %>
+          </ul>
         </div>
       </nav>
     </header>

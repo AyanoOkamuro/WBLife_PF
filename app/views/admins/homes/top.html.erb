@@ -1,2 +1,34 @@
-<h1>Admins::Homes#top</h1>
-<p>Find me in app/views/admins/homes/top.html.erb</p>
+<div class="container mt-5">
+  <h3 class="mb-4">会員一覧</h3>
+  <table class="table">
+    <thead>
+      <tr class="table-active">
+        <th>会員ID</th>
+        <th>氏名</th>
+        <th>性別</th>
+        <th>年代</th>
+        <th>メールアドレス</th>
+        <th>ステータス</th>
+        </tr>
+    </thead>
+    <% @users.each do |user| %>
+      <tbody>
+        <tr>
+          <td><%= user.id %></td>
+          <td><%= link_to user.nickname, edit_admins_user_path(user) %></td>
+          <td><%= user.gender %></td>
+          <td><%= user.age %></td>
+          <td nowrap><%= user.email %></td>
+          <td>
+            <% if user.is_deleted? %>
+              <span class="text-secondary font-weight-bold">退会</span>
+            <% else %>
+              <span class="text-success font-weight-bold">有効</span>
+            <% end %>
+          </td>
+        </tr>
+      </tbody>
+    <% end %>
+  </table>
+  <%= paginate(@users) %>
+</div>
