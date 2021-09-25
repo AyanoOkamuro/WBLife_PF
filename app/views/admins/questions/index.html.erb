@@ -1,2 +1,30 @@
-<h1>Admins::Questions#index</h1>
-<p>Find me in app/views/admins/questions/index.html.erb</p>
+<div class="container mt-5">
+  <h3 class="mb-4">質問一覧</h3>
+  <table class="table">
+    <thead>
+      <tr class="table-active">
+        <th>質問タイトル</th>
+        <th>質問内容</th>
+        <th colspan="1"></th>
+      </tr>
+    </thead>
+    <% @questions.each do |question| %>
+      <tbody>
+        <tr>
+          <td class="col-3">
+            <%= link_to question.title, admins_question_path(question.id) %>
+          </td>
+          <td class="col-md-7">
+            <%= question.body %>
+          </td>
+          <td>
+            回答 <%= question.answers.count %>件
+          </td>
+        </tr>
+      </tbody>
+    <% end %>
+  </table>
+</div>
+<div class="row justify-content-center">
+  <%= paginate @questions %>
+</div>

@@ -3,16 +3,16 @@
     <h5 class="ml-1"><strong>質問内容</strong></h5>
     <div class="card text-center mb-3">
       <div class="card-header align-items-center d-flex">
-        <%= link_to user_path(@question.user) do %>
-          <%= attachment_image_tag @question.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size: "50x50", class: "rounded-circle" %>
+        <%= link_to user_path(@user) do %>
+          <%= attachment_image_tag @user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size: "50x50", class: "rounded-circle" %>
         <% end %>
         <div class="ml-3">
           <strong>
-            <%= @question.user.nickname %>さん<br>
+            <%= link_to @user.nickname, user_path(@user), style:"text-decoration:none; color:black;" %>さん<br>
           </strong>
           <%= @question.created_at.strftime('%Y/%m/%d') %>
         </div>
-        <% if @question.user == current_user %>
+        <% if @user == current_user %>
           <div class="post-edit-destroy">
             <%= link_to edit_question_path(@question), class: "btn btn-default" do %>
               <i class="far fa-edit"></i>
@@ -53,20 +53,22 @@
             <% end %>
             <div class="ml-3">
               <strong>
-                <%= answer.user.nickname %>さん<br>
+                <%= link_to answer.user.nickname, user_path(answer.user), style:"text-decoration:none; color:black;" %>さん<br>
               </strong>
                 <%= answer.created_at.strftime('%Y/%m/%d') %>
             </div>
-            <% if answer.user == current_user %>
-              <div class="post-edit-destroy">
+            <div class="post-edit-destroy">
+              <% if answer.user == current_user %>
                 <%= link_to edit_question_answer_path(answer.question, answer), class: "btn btn-default" do %>
                   <i class="far fa-edit"></i>
                 <% end %>
+              <% end %>
+              <% if answer.user == current_user || @user == current_user %>
                 <%= link_to question_answer_path(answer.question, answer), method: :delete, class: "btn btn-default" do %>
                   <i class="far fa-trash-alt"></i>
                 <% end %>
-              </div>
-            <% end %>
+              <% end %>
+            </div>
           </div>
           <div class="card-body">
             <h6 class="card-text py-2"><%= answer.body %></h6>
@@ -76,13 +78,13 @@
             <% if answer.niced_by?(current_user) %>
               <%= link_to question_answer_nices_path(answer.question, answer), method: :delete do %>
                 <i class="far fa-thumbs-up fa-xs" aria-hidden="true"  style="color: green;">
-                  <strong>ナイス！</strong>
+                  <strong><%= answer.nices.count %> ナイス！</strong>
                 </i>
               <% end %>
             <% else %>
               <%= link_to question_answer_nices_path(answer.question, answer), method: :post, style:"text-decoration:none; color:black;" do %>
                 <i class="far fa-thumbs-up fa-xs" aria-hidden="true">
-                  <strong>ナイス！</strong>
+                  <strong><%= answer.nices.count %> ナイス！</strong>
                 </i>
               <% end %>
             <% end %>
