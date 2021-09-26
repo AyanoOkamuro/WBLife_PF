@@ -42,4 +42,8 @@ class User < ApplicationRecord
 
   enum gender: { "男性": 0, "女性": 1, "その他": 2 }
   enum age: { "-----": 0, "10代": 1, "20代": 2, "30代": 3, "40代": 4, "50代": 5, "60代以上": 6 }
+
+  validates :nickname, presence: true
+  validates :age, presence: true
+  validates :gender, presence: true
 end

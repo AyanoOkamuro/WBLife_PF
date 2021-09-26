@@ -1,4 +1,5 @@
 class Users::UsersController < ApplicationController
+  before_action :authenticate_user!
 
   def show
     @user = User.find(params[:id])
@@ -13,11 +14,11 @@ class Users::UsersController < ApplicationController
   def update
     @user = current_user
     if @user.update(user_params)
-    flash[:notice] = "更新できました。"
-    redirect_to user_path(@user)
+      flash[:notice] = "会員情報を更新しました。"
+      redirect_to user_path(@user)
     else
-    flash[:alert] = "更新できませんでした。記載内容に謝りがある可能性がございます。"
-    render :edit
+      flash[:alert] = "会員情報を更新できませんでした。記載内容に謝りがある可能性がございます。"
+      render :edit
     end
   end
 

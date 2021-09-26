@@ -1,17 +1,12 @@
 class Users::AnswersController < ApplicationController
+  before_action :authenticate_user!
 
   def create
     @question = Question.find(params[:question_id])
     @user = @question.user
     @answer = current_user.answers.new(answer_params)
     @answer.question_id = @question.id
-    if @answer.save
-      flash[:notice] = "回答しました。"
-      # redirect_to question_path(@question)
-    else
-      flash[:alert] = "回答できませんでした。記載内容に謝りがある可能性がございます。"
-      # redirect_to question_path(@question)
-    end
+    @answer.save
   end
 
   def edit
@@ -26,7 +21,7 @@ class Users::AnswersController < ApplicationController
       flash[:notice] = "編集しました。"
       redirect_to question_path(@question)
     else
-      flash[:alert] = "編集できませんでした。記載内容に謝りがある可能性がございます。"
+      flash[:alert] = "回答を更新できませんでした。記載内容に謝りがある可能性がございます。"
       render :edit
     end
   end
@@ -36,8 +31,6 @@ class Users::AnswersController < ApplicationController
     @user = @question.user
     @answer = @question.answers.find(params[:id])
     @answer.destroy
-    flash[:notice] = "削除しました。"
-    # redirect_to question_path(@question)
   end
 
   private

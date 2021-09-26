@@ -1,4 +1,5 @@
 class Admins::PostsController < ApplicationController
+  before_action :authenticate_admin!
 
   def index
     @posts = Post.page(params[:page]).reverse_order
@@ -12,6 +13,7 @@ class Admins::PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
+    flash[:alert] = "投稿を削除しました。"
     redirect_to admins_posts_path
   end
 

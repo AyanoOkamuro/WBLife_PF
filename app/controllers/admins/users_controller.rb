@@ -1,4 +1,6 @@
 class Admins::UsersController < ApplicationController
+  before_action :authenticate_admin!
+
   def index
     @users = User.page(params[:page]).per(10)
   end
@@ -10,9 +12,11 @@ class Admins::UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update(user_params)
+      flash[:notice] = "会員情報を更新しました。"
       redirect_to admins_users_path
     else
-      redirect_to request.referer, notice:"更新できませんでした"
+      flash[:alert] = "会員情報を更新できませんでした。記載内容に謝りがある可能性がございます。"
+      redirect_to request.referer
     end
   end
 

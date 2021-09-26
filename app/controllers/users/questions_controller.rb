@@ -1,4 +1,5 @@
 class Users::QuestionsController < ApplicationController
+  before_action :authenticate_user!
 
   def new
     @question = Question.new
@@ -11,7 +12,8 @@ class Users::QuestionsController < ApplicationController
       flash[:notice] = "質問を投稿しました"
       redirect_to question_path(@question.id)
     else
-      @question = Question.all
+      @questions = Question.all
+      flash[:alert] = "質問を投稿できませんでした。記載内容に謝りがある可能性がございます。"
       render :index
     end
   end
@@ -23,7 +25,7 @@ class Users::QuestionsController < ApplicationController
   end
 
   def index
-    @questions = Question.page(params[:page]).reverse_order
+    @questions = Question.page(params[:page]).per(10).reverse_order
   end
 
   def edit
@@ -41,6 +43,7 @@ class Users::QuestionsController < ApplicationController
       flash[:notice] = "質問内容を編集しました"
       redirect_to question_path(@question.id)
     else
+      flash[:alert] = "質問内容を更新できませんでした。記載内容に謝りがある可能性がございます。"
       render :edit
     end
   end
@@ -48,6 +51,7 @@ class Users::QuestionsController < ApplicationController
   def destroy
     @question = Question.find(params[:id])
     @question.destroy
+    flash[:alert] = "質問を削除しました。"
     redirect_to questions_path
   end
 

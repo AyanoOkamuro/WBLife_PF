@@ -1,5 +1,5 @@
 class Post < ApplicationRecord
-  
+
   belongs_to :user
   has_many :likes, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -32,5 +32,7 @@ class Post < ApplicationRecord
       self.tags << new_post_tag
     end
   end
+
+  validates :image, presence: true
 
 end

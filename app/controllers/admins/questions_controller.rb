@@ -1,4 +1,6 @@
 class Admins::QuestionsController < ApplicationController
+  before_action :authenticate_admin!
+
   def index
     @questions = Question.page(params[:page]).reverse_order
   end
@@ -11,6 +13,7 @@ class Admins::QuestionsController < ApplicationController
   def destroy
     @question = Question.find(params[:id])
     @question.destroy
+    flash[:alert] = "質問を削除しました。"
     redirect_to admins_questions_path
   end
 end

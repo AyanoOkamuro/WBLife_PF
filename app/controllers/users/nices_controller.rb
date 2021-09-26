@@ -1,4 +1,5 @@
 class Users::NicesController < ApplicationController
+  before_action :authenticate_user!
 
   def create
     @answer = Answer.find(params[:answer_id])
