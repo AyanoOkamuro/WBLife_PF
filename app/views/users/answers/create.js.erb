@@ -1,0 +1,2 @@
+$('#answer_post_<%= @question.id %>').html('<%= j render "users/answers/index", { question: @question, user: @user } %>');
+$('textarea').val("");

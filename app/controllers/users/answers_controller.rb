@@ -2,14 +2,15 @@ class Users::AnswersController < ApplicationController
 
   def create
     @question = Question.find(params[:question_id])
+    @user = @question.user
     @answer = current_user.answers.new(answer_params)
     @answer.question_id = @question.id
     if @answer.save
       flash[:notice] = "回答しました。"
-      redirect_to question_path(@question)
+      # redirect_to question_path(@question)
     else
       flash[:alert] = "回答できませんでした。記載内容に謝りがある可能性がございます。"
-      redirect_to question_path(@question)
+      # redirect_to question_path(@question)
     end
   end
 
@@ -32,10 +33,11 @@ class Users::AnswersController < ApplicationController
 
   def destroy
     @question = Question.find(params[:question_id])
+    @user = @question.user
     @answer = @question.answers.find(params[:id])
     @answer.destroy
     flash[:notice] = "削除しました。"
-    redirect_to question_path(@question)
+    # redirect_to question_path(@question)
   end
 
   private

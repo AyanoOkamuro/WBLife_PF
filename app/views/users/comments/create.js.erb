@@ -1,0 +1,2 @@
+$('#comment_post_<%= @post.id %>').html('<%= j render "users/comments/index", { post: @post, user: @user } %>');
+$('#comment_form_post_<%= @post.id %> #comment_comment').val("");
