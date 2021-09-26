@@ -28,6 +28,12 @@
             <div id="likes_btn_<%= @post.id %>">
               <%= render "users/likes/like", { post: @post} %>
             </div>
+            <div class="mx-3">
+              <% @post_tags.each do |tag| %>
+                <i class="fas fa-tags"></i>
+                <strong><%= link_to tag.name, search_tag_path(tag_id: tag.id) %></strong>
+              <% end %>
+            </div>
           </div>
           <div class="my-3">
             <strong><%= @user.nickname %></strong>
