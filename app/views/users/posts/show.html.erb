@@ -4,7 +4,7 @@
       <div class="card">
         <div class="card-header align-items-center d-flex">
           <%= link_to user_path(@user) do %>
-            <%= attachment_image_tag @user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size: "40x40", class: "rounded-circle" %>
+            <%= attachment_image_tag @user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size: "50x50", class: "rounded-circle" %>
           <% end %>
           <div class="post-user-name ml-3">
             <strong>
@@ -25,42 +25,19 @@
         <%= attachment_image_tag @post, :image, format: "jpeg", fallback: "no_image.jpg", class: "card-img-top" %>
         <div class="card-body">
           <div class="row ml-1">
-            <% if @post.liked_by?(current_user) %>
-              <%= link_to post_likes_path(@post), method: :delete do %>
-                <i class="fa fa-heart" aria-hidden="true"  style="color: red;">
-                  <%= @post.likes.count %>
-                </i>
-              <% end %>
-            <% else %>
-              <%= link_to post_likes_path(@post), method: :post do %>
-                <i class="fa fa-heart" aria-hidden="true">
-                  <%= @post.likes.count %>
-                </i>
-              <% end %>
-            <% end %>
+            <div id="likes_btn_<%= @post.id %>">
+              <%= render "users/likes/like", { post: @post} %>
+            </div>
           </div>
           <div class="my-3">
             <strong><%= @user.nickname %></strong>
             <%= @post.body %>
           </div>
-          <% @post.comments.each do |comment| %>
-            <div class="mb-2">
-              <%= link_to attachment_image_tag(comment.user, :profile_image, format: "jpeg", fallback: "no_image.jpg", size:"20x20", class: "rounded-circle"), user_path(comment.user_id) %>
-              <strong><%= comment.user.nickname %></strong>
-              <%= comment.comment %>
-              <% if comment.user == current_user || @user == current_user %>
-                <%= link_to post_comment_path(comment.post, comment), method: :delete, class: "btn btn-default" do %>
-                  <i class="fas fa-times"></i>
-                <% end %>
-              <% end %>
-            </div>
-          <% end %>
-          <div class="row mt-3">
-            <%= form_with model: [@post, Comment.new],  class: "w-100", local: true do |f| %>
-              <%= f.hidden_field :user_id, value: current_user.id %>
-              <%= f.hidden_field :post_id, value: @post.id %>
-              <%= f.text_field :comment, class: "form-control comment-input border-0", placeholder: "コメント ...", autocomplete: :off %>
-            <% end %>
+          <div id="comment_post_<%= @post.id %>">
+            <%= render "users/comments/index", { post: @post, user: @user} %>
+          </div>
+          <div class="row actions" id="comment_form_post_<%= @post.id %>">
+            <%= render "users/comments/form", { post: @post, comment: @comment} %>
           </div>
         </div>
       </div>
