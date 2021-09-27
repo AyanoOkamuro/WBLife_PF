@@ -5,5 +5,4 @@ class Users::AnswersControllerTest < ActionDispatch::IntegrationTest
     get users_answers_edit_url
     assert_response :success
   end
-
 end

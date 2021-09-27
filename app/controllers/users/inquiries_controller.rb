@@ -33,5 +33,4 @@ class Users::InquiriesController < ApplicationController
   def inquiry_params
     params.require(:inquiry).permit(:name, :email, :message)
   end
-
 end

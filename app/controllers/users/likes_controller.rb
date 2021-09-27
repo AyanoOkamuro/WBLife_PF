@@ -1,6 +1,6 @@
 class Users::LikesController < ApplicationController
   before_action :authenticate_user!
-  
+
   def create
     @post = Post.find(params[:post_id])
     like = current_user.likes.new(post_id: @post.id)
@@ -14,5 +14,4 @@ class Users::LikesController < ApplicationController
     like.destroy
     # redirect_back(fallback_location: root_path)
   end
-
 end

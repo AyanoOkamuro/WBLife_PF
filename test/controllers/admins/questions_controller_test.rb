@@ -10,5 +10,4 @@ class Admins::QuestionsControllerTest < ActionDispatch::IntegrationTest
     get admins_questions_show_url
     assert_response :success
   end
-
 end

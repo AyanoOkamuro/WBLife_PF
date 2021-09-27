@@ -2,7 +2,7 @@ class Admins::QuestionsController < ApplicationController
   before_action :authenticate_admin!
 
   def index
-    @questions = Question.page(params[:page]).reverse_order
+    @questions = Question.page(params[:page]).per(10).reverse_order
   end
 
   def show

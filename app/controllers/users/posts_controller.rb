@@ -9,7 +9,7 @@ class Users::PostsController < ApplicationController
     @post = Post.new(post_params)
     @post.user_id = current_user.id
     # 受け取った値を,で区切って配列にする
-    tag_list=params[:post][:name].split(',')
+    tag_list = params[:post][:name].split(',')
     if @post.save
       @post.save_tag(tag_list)
       flash[:notice] = "投稿しました。"
@@ -66,12 +66,11 @@ class Users::PostsController < ApplicationController
   end
 
   def search_tag
-    #検索結果画面でもタグ一覧表示
+    # 検索結果画面でもタグ一覧表示
     @tag_list = Tag.all
     @tag = Tag.find(params[:tag_id])
     @posts = @tag.posts.page(params[:page]).per(10)
   end
-
 
   private
 

@@ -23,19 +23,19 @@ class Users::UsersController < ApplicationController
   end
 
   def unsubscribe
-  @user = current_user
+    @user = current_user
   end
 
   def withdraw
-   @user = current_user
-   @user.update(is_deleted: true)
+    @user = current_user
+    @user.update(is_deleted: true)
     reset_session
     redirect_to root_path
   end
 
-private
-  def user_params
-   params.require(:user).permit(:nickname, :email, :profile_image, :age)
-  end
+  private
 
+  def user_params
+    params.require(:user).permit(:nickname, :email, :profile_image, :age)
+  end
 end

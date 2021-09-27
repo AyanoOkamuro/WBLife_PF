@@ -60,5 +60,4 @@ class Users::QuestionsController < ApplicationController
   def question_params
     params.require(:question).permit(:user_id, :title, :body, :image)
   end
-
 end

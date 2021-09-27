@@ -1,18 +1,17 @@
 Rails.application.routes.draw do
-
   devise_for :admins, controllers: {
     sessions: 'admins/sessions',
   }
 
-  devise_for :users,controllers:{
+  devise_for :users, controllers: {
     registrations: "users/registrations",
     passwords: "users/passwords",
-    sessions: "users/sessions"
+    sessions: "users/sessions",
   }
 
   scope module: :users do
     root to: "homes#top"
-    resources :users,only:[:show, :edit, :update]do
+    resources :users, only: [:show, :edit, :update] do
       get "users/unsubscribe" => "users#unsubscribe"
       patch "users/withdraw" => "users#withdraw"
       resource :relationships, only: [:create, :destroy]
@@ -37,9 +36,8 @@ Rails.application.routes.draw do
 
   namespace :admins do
     root to: "homes#top"
-    resources :users,only:[:index, :edit, :update]
-    resources :posts,only: [:index,:show,:destroy]
-    resources :questions,only: [:index,:show,:destroy]
+    resources :users, only: [:index, :edit, :update]
+    resources :posts, only: [:index, :show, :destroy]
+    resources :questions, only: [:index, :show, :destroy]
   end
-
 end

@@ -11,14 +11,14 @@ class User < ApplicationRecord
   has_many :answers, dependent: :destroy
   has_many :nices, dependent: :destroy
 
-  #与フォロー(自分がフォローする関係性)
+  # 与フォロー(自分がフォローする関係性)
   has_many :relationships, class_name: "Relationship", foreign_key: "follower_id", dependent: :destroy
-  #自分がフォローしている人の参照
+  # 自分がフォローしている人の参照
   has_many :followings, through: :relationships, source: :followed
 
-  #被フォロー(自分がフォローされる関係性)
+  # 被フォロー(自分がフォローされる関係性)
   has_many :reverse_of_relationships, class_name: "Relationship", foreign_key: "followed_id", dependent: :destroy
-  #自分をフォローしている人の参照
+  # 自分をフォローしている人の参照
   has_many :followers, through: :reverse_of_relationships, source: :follower
 
   def follow(user_id)
@@ -33,17 +33,16 @@ class User < ApplicationRecord
     followings.include?(user)
   end
 
-  #論理削除　
+  # 論理削除
   def active_for_authentication?
-    super && (self.is_deleted == false)
+    super && (is_deleted == false)
   end
 
   attachment :profile_image
 
   enum gender: { "男性": 0, "女性": 1, "その他": 2 }
-  enum age: { "-----": 0, "10代": 1, "20代": 2, "30代": 3, "40代": 4, "50代": 5, "60代以上": 6 }
+  enum age: { "10代": 0, "20代": 1, "30代": 2, "40代": 3, "50代": 4, "60代以上": 5 }
 
   validates :nickname, presence: true
-  validates :age, presence: true
-  validates :gender, presence: true
+
 end

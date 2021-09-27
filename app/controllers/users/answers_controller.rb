@@ -38,5 +38,4 @@ class Users::AnswersController < ApplicationController
   def answer_params
     params.require(:answer).permit(:user_id, :question_id, :body, :image)
   end
-
 end
