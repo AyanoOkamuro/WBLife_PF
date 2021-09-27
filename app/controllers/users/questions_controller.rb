@@ -12,9 +12,8 @@ class Users::QuestionsController < ApplicationController
       flash[:notice] = "質問を投稿しました"
       redirect_to question_path(@question.id)
     else
-      @questions = Question.all
       flash[:alert] = "質問を投稿できませんでした。記載内容に謝りがある可能性がございます。"
-      render :index
+      render :new
     end
   end
 
