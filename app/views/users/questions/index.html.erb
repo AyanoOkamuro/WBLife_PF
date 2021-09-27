@@ -1,0 +1,50 @@
+<div class="container mt-5">
+  <div class="row mb-2">
+    <div class="col-4">
+      <h3>質問一覧</h3>
+    </div>
+    <div class="col-md-1 ml-md-auto">
+      <%= link_to  new_question_path, class: 'btn btn-default' do %>
+        <h4><i class="fas fa-plus"></i></h4>
+      <% end %>
+    </div>
+  </div>
+  <div class="row">
+    <table class="table">
+      <thead>
+        <tr class="table-active">
+          <th>質問タイトル</th>
+          <th>質問内容</th>
+          <th colspan="2"></th>
+        </tr>
+      </thead>
+      <% @questions.each do |question| %>
+        <tbody>
+          <tr>
+            <td class="col-3">
+              <%= link_to question.title, question_path(question.id) %>
+            </td>
+            <td class="col-md-7">
+              <%= question.body %>
+            </td>
+            <% if question.user == current_user %>
+              <td>
+                <%= link_to question_path(question), method: :delete, data: {confirm: "この投稿を消しますか？"}, class: "btn btn-default" do %>
+                  <i class="far fa-trash-alt"></i>
+                <% end %>
+              </td>
+            <% else %>
+              <td></td>
+            <% end %>
+            <td>
+              回答 <%= question.answers.count %>件
+            </td>
+          </tr>
+        </tbody>
+      <% end %>
+    </table>
+  </div>
+</div>
+<div class="row justify-content-center">
+  <%= paginate @questions %>
+</div>

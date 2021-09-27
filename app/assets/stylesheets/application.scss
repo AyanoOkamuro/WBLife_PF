@@ -18,4 +18,16 @@
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
 
+body {
+font-family: 'Noto Serif JP', serif
+}
 
+.top-image {
+  background-image: image-url("main-visual.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
+  min-height: 300px;
+  background-position: center
+}

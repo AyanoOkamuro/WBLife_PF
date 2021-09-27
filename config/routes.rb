@@ -1,35 +1,43 @@
 Rails.application.routes.draw do
-  # devise_for :users
-  devise_for :users,controllers:{
-    registrations: "users/registrations",
-    passwords: "users/passwords",
-    sessions: "users/sessions"
+  devise_for :admins, controllers: {
+    sessions: 'admins/sessions',
   }
 
-  # devise_scope :users do
-  #   get "users/sign_up", :to => "users/registrations#new"
-  #   post "users", :to => "users/registrations#create"
-
-  #   get "users/sign_in", :to => "users/sessions#new"
-  #   post "users/sign_in", :to => "users/sessions#create"
-  #   delete "users/sign_out", :to => "users/sessions#destroy"
-  # end
-
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+    passwords: "users/passwords",
+    sessions: "users/sessions",
+  }
 
   scope module: :users do
     root to: "homes#top"
-    get "users/:id/edit" => "users#edit"
-    get "users/:id" => "users#show"
-    patch "users/:id" => "users#update"
-    get 'homes/about'
-    resource :users,only:[:edit,:update]
-    get "users/unsubscribe" => "users#unsubscribe"
-    patch "users/withdraw" => "users#withdraw"
+    resources :users, only: [:show, :edit, :update] do
+      get "users/unsubscribe" => "users#unsubscribe"
+      patch "users/withdraw" => "users#withdraw"
+      resource :relationships, only: [:create, :destroy]
+      get 'followings' => 'relationships#followings', as: 'followings'
+      get 'followers' => 'relationships#followers', as: 'followers'
+    end
+    get "search_tag" => "posts#search_tag"
+    resources :posts do
+      resource :likes, only: [:create, :destroy]
+      resources :comments, only: [:create, :destroy]
+    end
+    resources :questions do
+      resources :answers, only: [:create, :edit, :update, :destroy] do
+        resource :nices, only: [:create, :destroy]
+      end
+    end
+
+    get   'inquiries'         => 'inquiries#index'     # 入力画面
+    post  'inquiries/confirm' => 'inquiries#confirm'   # 確認画面
+    post  'inquiries/thanks'  => 'inquiries#thanks'    # 送信完了画面
   end
 
-
-
-
-
-#   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  namespace :admins do
+    root to: "homes#top"
+    resources :users, only: [:index, :edit, :update]
+    resources :posts, only: [:index, :show, :destroy]
+    resources :questions, only: [:index, :show, :destroy]
+  end
 end

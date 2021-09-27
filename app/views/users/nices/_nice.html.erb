@@ -1,0 +1,13 @@
+<% if answer.niced_by?(current_user) %>
+  <%= link_to question_answer_nices_path(answer.question, answer), method: :delete, remote: true do %>
+    <i class="far fa-thumbs-up fa-xs faa-tada animated-hover" aria-hidden="true"  style="color: green;">
+      <strong><%= answer.nices.count %> ナイス！</strong>
+    </i>
+  <% end %>
+<% else %>
+  <%= link_to question_answer_nices_path(answer.question, answer), method: :post, remote: true, style:"text-decoration:none; color:black;" do %>
+    <i class="far fa-thumbs-up fa-xs" aria-hidden="true">
+      <strong><%= answer.nices.count %> ナイス！</strong>
+    </i>
+  <% end %>
+<% end %>

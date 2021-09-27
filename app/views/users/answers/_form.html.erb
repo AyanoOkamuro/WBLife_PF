@@ -1,0 +1,13 @@
+<%= form_with model: [question, answer], remote: true do |f| %>
+  <div class="form-group mt-5 text-center">
+    <strong><label>回答文</label></strong>
+    <%= f.text_area :body, class: "form-control" %>
+  </div>
+  <div class="text-center"><%= f.attachment_field :image %></div>
+  <div class="text-right mb-5">
+    <%= button_tag :type => "submit", :class =>"btn btn-default" do %>
+      <i class="far fa-paper-plane fa-lg faa-float animated-hover"></i>
+      <strong>送信</strong>
+    <% end %>
+  </div>
+<% end %>

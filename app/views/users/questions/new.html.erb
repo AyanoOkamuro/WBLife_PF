@@ -1,0 +1,28 @@
+<div class="container mt-5">
+  <div class="col mx-auto">
+    <div class="card form-wrap">
+      <div class="card-body">
+        <h4 class="card-title mb-4 text-center">
+          質問投稿
+        </h4>
+        <%= form_with model: @question, url: questions_path,  local: true do |f| %>
+          <div class="form-group bmd-form-group">
+            <%= f.label :質問タイトル, class:"bmd-label-floating" %>
+            <%= f.text_field :title, autocomplete: "image", class:"form-control border-dark" %>
+          </div>
+          <div class="form-group bmd-form-group">
+            <%= f.label :質問内容, class:"bmd-label-floating mt-2" %>
+            <%= f.text_area :body, autofocus: true, autocomplete: "body", class:"form-control border-dark" %>
+          </div>
+          <div class="bmd-form-group">
+            <%= f.label :質問タイトル, class:"bmd-label-floating" %><br>
+            <%= f.attachment_field :image, autocomplete: "image" %>
+          </div>
+          <div class="form-group">
+            <%= f.submit "投稿する", class:"btn btn-outline-dark btn-block btn-raised mt-3" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

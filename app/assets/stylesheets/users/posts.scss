@@ -1,0 +1,18 @@
+// Place all the styles related to the users/posts controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.card-wrap {
+  position: relative;
+}
+
+.post-edit-destroy {
+  position: absolute;
+  right: 20px;
+}
+
+.post-user-name {
+  display: flex;
+  align-items: center;
+  line-height: 0;
+}
