@@ -25,6 +25,7 @@ WBLifeを通して、少しでもバイクに乗ってみたいと思う女性�
 - バイクやライダー、ツーリング先の情報が欲しい時
 
 ## 設計書
+(アプリケーション制作段階で変更点もございます。)
 - ER図、UIフローは[こちら](https://app.diagrams.net/#G19wD9GPmW1BdqRAB-hlgDSCx-JXQ2bPqo)から。
 - 利用者側ワイヤーフレームは[こちら](https://drive.google.com/file/d/1VPykL017Slr3toFtwN_DxT0R4krPblhe/view?usp=sharing)から。
 - 管理者側ワイヤーフレーム[こちら](https://drive.google.com/file/d/1MzyCtwoEJaKPJ4-ydMoBlQJyMJJdtRfo/view?usp=sharing)から。
